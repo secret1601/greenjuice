@@ -16,6 +16,7 @@ $(document).ready(function () {
     let link_bt = $('.link-bt');
     link_bt.click(function () {
         link_list.stop().slideToggle(300);
+        link_bt.find("span").toggleClass("link-bt-span-active");
     });
 
     // 위로가기 기능
@@ -42,6 +43,27 @@ $(document).ready(function () {
 
 
 window.onload = function () {
+
+    // 오늘의 상품 좋아요 기능 관련
+
+    let today_a = $('.today-wrap .good a');
+    $('.today-wrap').click(function(){
+        alert('요기말구 하트를 눌러봐용~');
+    })
+    $.each(today_a, function(index, item) {
+        // a 태그는 정상적으로 웹드라우저를 갱신해야 한다.
+        // 그러나 heart를 눌렀을 때는 웹브라우저 갱신 되면 안된다.
+        let heart = $(this).find('.good-heart');
+        heart.click(function(e){
+            // 엄마 태그로 click을 전달하지 않는다.
+            e.stopPropagation();
+            e.preventDefault();
+
+            $(this).toggleClass('good-heart-active');
+        });
+
+    });
+
     // 비주얼 슬라이드
     let sw_visual = new Swiper('.sw-visual', {
         loop: true,
@@ -56,6 +78,10 @@ window.onload = function () {
         pagination: {
             el: '.sw-visual-pg',
             type: 'fraction',
+        },
+        navigation: {
+            nextEl: '.sw-visual-next',
+            prevEl: '.sw-visual-prev'
         }
     });
 
@@ -266,5 +292,7 @@ window.onload = function () {
 
     // 최초 무조건 기능을 위해서 실행해 준다.
     showBest(1);
+
+   
 
 }
